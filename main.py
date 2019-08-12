@@ -6,8 +6,6 @@ from tkinter import Entry
 from tkinter import StringVar
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-import openpyxl
-from openpyxl import load_workbook
 import tkinter
 import tkinter.filedialog
 import base64
@@ -90,6 +88,9 @@ def Crypt():
     encodedStr = str(encodedBytes, "utf-8")
     output +="Base64 = " + encodedStr +"\n"
 
+    #HEX-----------------------------------------------------------------------------------------
+    output += "HEX = ...SOON" +"\n"
+
 
 
     #Cesar-----------------------------------------------------------------------------------------
@@ -100,7 +101,7 @@ def Crypt():
     numbers="1234567890"
 
     #key = int(input("Enter your key : "))
-    key =3
+    key=3
 
     n=len(input1)
     m=len(Alphabet1)
@@ -111,17 +112,16 @@ def Crypt():
 
         if input1[i]==" ":
             output_cesar+=" "
+        if input1[i]=="\n":
+            output_cesar+=" "
 
         for j in range(m):
             if input1[i]==Alphabet1[j]:
                 output_cesar += Alphabet1[j+key]
-            elif input1[i]==Alphabet2[j]:
+            if input1[i]==Alphabet2[j]:
                 output_cesar += Alphabet1[j + key]
 
 
-        for p in range(l):
-            if input1[i]==numbers[p]:
-                output_cesar += numbers[p]
 
     print(output_cesar)
     output += "CESAR = " + output_cesar
