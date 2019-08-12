@@ -88,7 +88,7 @@ def Crypt():
 
     encodedBytes = base64.b64encode(input1.encode("utf-8"))
     encodedStr = str(encodedBytes, "utf-8")
-    output +="Base64 = " + encodedStr
+    output +="Base64 = " + encodedStr +"\n"
 
 
 
@@ -99,8 +99,8 @@ def Crypt():
     Alphabet2 = "abcdefghijklmnopqrstuvzxyz"
     numbers="1234567890"
 
-    key = int(input("Enter your key : "))
-
+    #key = int(input("Enter your key : "))
+    key =3
 
     n=len(input1)
     m=len(Alphabet1)
@@ -109,24 +109,22 @@ def Crypt():
     output_cesar=""
     for i in range(n):
 
+        if input1[i]==" ":
+            output_cesar+=" "
+
         for j in range(m):
             if input1[i]==Alphabet1[j]:
                 output_cesar += Alphabet1[j+key]
-            else:
-                break
+            elif input1[i]==Alphabet2[j]:
+                output_cesar += Alphabet1[j + key]
 
-        for p in range(k):
-            if input1[i] == Alphabet2[p]:
-                output_cesar += Alphabet1[p+key]
-            else:
-                break
 
-        for q in range(l):
-            if input1[i] == numbers[q]:
-                break
-
+        for p in range(l):
+            if input1[i]==numbers[p]:
+                output_cesar += numbers[p]
 
     print(output_cesar)
+    output += "CESAR = " + output_cesar
 
     #-------------------------------------------------------------------------------------------------
     #Enregistred file and output
