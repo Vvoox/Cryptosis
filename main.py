@@ -76,7 +76,7 @@ def set_filename():
 
 def Crypt():
 
-    #ASCII---------------------------------------------------------------------------------
+    #ASCII---------------------------------------------------------------------------------------
     input = text.get("1.0", END)
     print(input)
     list=[]
@@ -92,7 +92,7 @@ def Crypt():
           #  for line in output:
             #    f1.write(line)
 
-    #Base64--------------------------------------------------------------------------------
+    #Base64--------------------------------------------------------------------------------------
 
     #with open("input.txt") as f:
         #for line in f:
@@ -102,7 +102,25 @@ def Crypt():
     output +="Base64 = " + encodedStr
     print(encodedStr)
 
-    #-----------------------------------------------------------------------------------------
+    #Cesar-----------------------------------------------------------------------------------------
+    Alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    numbers="1234567890"
+    key =input("Enter your key : ")
+
+    input = text.get("1.0", END)
+
+    n=len(input)
+    m=len(Alphabet)
+    for i in range(n) :
+
+        try:
+
+
+
+
+
+
+
     with open("output.txt", "w") as f1:
         for line in output:
             f1.write(line)
@@ -113,17 +131,26 @@ def Crypt():
     print("File registered")
 
 def Decrypt():
-    decodedMessage = ""
+    try:
 
-    input = text.get("1.0", END)
+        decodedMessage = ""
 
+        input = text.get("1.0", END)
+        for item in input.split():
+            decodedMessage+= chr(int(item))
+        output = "ASCII to Plaintext =  "  + decodedMessage '+"\n"
+        print(decodedMessage)
+        text1.delete('1.0', END)
+        text1.insert(INSERT, output)
 
-    encodedBytes=base64.b64decode(input)
-    decodedStr = str(encodedBytes, "utf-8")
-    output = "Base64 to plaintext =  " + decodedStr
-    text1.delete('1.0', END)
-    text1.insert(INSERT,output)
-    print("File registered")
+    except:
+
+        encodedBytes=base64.b64decode(input)
+        decodedStr = str(encodedBytes, "utf-8")
+        output = "Base64 to Plaintext =  " + decodedStr
+        text1.delete('1.0', END)
+        text1.insert(INSERT,output)
+        print("File registered")
 
 text1 = Text(root, height=10, width=90)
 text1.insert(INSERT, output)
