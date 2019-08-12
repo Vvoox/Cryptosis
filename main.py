@@ -37,8 +37,8 @@ output="Outputs"
 
 text = Text(root, height=10, width=90)
 #text.tag_config("Write Here")
-input="Insert your text here...or browse your file"
-text.insert(INSERT,input)
+input1="Insert your text here...or browse your file"
+text.insert(INSERT,input1)
 canvas1.create_window(400, 500, window=text)
 
 
@@ -77,54 +77,62 @@ def set_filename():
 def Crypt():
 
     #ASCII---------------------------------------------------------------------------------------
-    input = text.get("1.0", END)
-    print(input)
-    list=[]
-    for i in input :
-        list+=i
-    #print(list)
-    #output= "ASCII = " + ("".join("%d" % ord(c) for c in s) for s in list) + "\n"
-    #with open("input.txt") as f:
-        #for line in f:
-    output = "ASCII = " + ''.join(" "+ str(ord(c)) for c in input) + "\n"
 
-        #with open("output.txt", "w") as f1:
-          #  for line in output:
-            #    f1.write(line)
+    input1 = text.get("1.0", END)
+    list=[]
+    for i in input1 :
+        list+=i
+    output = "ASCII = " + ''.join(" "+ str(ord(c)) for c in input1) + "\n"
 
     #Base64--------------------------------------------------------------------------------------
 
-    #with open("input.txt") as f:
-        #for line in f:
-    #input = text.get("1.0", END)
-    encodedBytes = base64.b64encode(input.encode("utf-8"))
+    encodedBytes = base64.b64encode(input1.encode("utf-8"))
     encodedStr = str(encodedBytes, "utf-8")
     output +="Base64 = " + encodedStr
-    print(encodedStr)
+
+
 
     #Cesar-----------------------------------------------------------------------------------------
-    Alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    input1 = text.get("1.0", END)
+    Alphabet1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    Alphabet2 = "abcdefghijklmnopqrstuvzxyz"
     numbers="1234567890"
-    key =input("Enter your key : ")
 
-    input = text.get("1.0", END)
-
-    n=len(input)
-    m=len(Alphabet)
-    for i in range(n) :
-
-        try:
+    key = int(input("Enter your key : "))
 
 
+    n=len(input1)
+    m=len(Alphabet1)
+    k=len(Alphabet2)
+    l=len(numbers)
+    output_cesar=""
+    for i in range(n):
+
+        for j in range(m):
+            if input1[i]==Alphabet1[j]:
+                output_cesar += Alphabet1[j+key]
+            else:
+                break
+
+        for p in range(k):
+            if input1[i] == Alphabet2[p]:
+                output_cesar += Alphabet1[p+key]
+            else:
+                break
+
+        for q in range(l):
+            if input1[i] == numbers[q]:
+                break
 
 
+    print(output_cesar)
 
-
-
+    #-------------------------------------------------------------------------------------------------
+    #Enregistred file and output
     with open("output.txt", "w") as f1:
         for line in output:
             f1.write(line)
-
 
     text1.delete('1.0', END)
     text1.insert(INSERT,output)
@@ -138,7 +146,7 @@ def Decrypt():
         input = text.get("1.0", END)
         for item in input.split():
             decodedMessage+= chr(int(item))
-        output = "ASCII to Plaintext =  "  + decodedMessage '+"\n"
+        output = "ASCII to Plaintext =  "  + decodedMessage +"\n"
         print(decodedMessage)
         text1.delete('1.0', END)
         text1.insert(INSERT, output)
