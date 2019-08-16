@@ -13,6 +13,7 @@ import tkinter.filedialog
 import base64
 from tkinter.ttk import *
 import webbrowser
+from subprocess import call
 
 
 root=Tk()
@@ -23,13 +24,14 @@ root.iconbitmap('icon.ico')
 
 height = root.winfo_screenheight()
 width = root.winfo_screenwidth()
-canvas1 = Canvas(root, width=width/2.5, height=height-300)
+canvas1 = Canvas(root, width=width, height=height)
 print("\n width x height = %d x %d (in pixels)\n" %(width, height))
 img = PhotoImage(file="cry.ppm")
-canvas1.create_image(2,40, anchor=NW, image=img)
+canvas1.create_image(width/4,40, anchor=NW, image=img)
 menu = Menu(root)
 root.config(menu=menu)
 filemenu = Menu(menu)
+
 
 #scrollbar = Scrollbar(root)
 #scrollbar.pack( side = RIGHT, fill = Y )
@@ -55,7 +57,7 @@ text = Text(root, height=10, width=60)
 #text.tag_config("Write Here")
 input1="Insert your text here...or browse your file"
 text.insert(INSERT,input1)
-canvas1.create_window(400, 500, window=text)
+canvas1.create_window(width/2.6, 500, window=text)
 
 def Contact():
 
@@ -92,32 +94,13 @@ def Contact():
     #messageVar = Text(contact )
     #Contact_canvas = Text(Contact)
     #contact.config(bg='lightgreen')
-"""def Key():
-
-    key = Tk()
-    key.title("The key")
-    cesar_key="Your Key"
-    height_root = canvas1.winfo_screenheight()
-    width_root = canvas1.winfo_screenwidth()
-    key_canvas = Canvas(key, width=320, height=80)
-    key_text = Text(key, height=1, width=30)
-    key_text.insert(INSERT, cesar_key)
-    key_canvas.create_window(150, 20, window=key_text)
-    button_key = Button(key, text='   Enter  ', command=take_key(cesar_key))
-    key_canvas.create_window(200, 60, window=button_key)
-    button_key1 = Button(key, text='   Annuler  ', command=key_canvas.destroy)
-    key_canvas.create_window(100, 60, window=button_key1)"""
-
-
-
-
-
-
 
 
 def About_us():
 
-    messagebox.showinfo("Info", "  Crisis Lab  ")
+    messagebox.showinfo("Info", "  Information systems are now an integral part of the functioning of public administrations, business activity and the way of life of citizens. From now on, they have become indispensable and unavoidable"+
+"Securing and controlling the information conveyed by information systems is becoming more and more of an issue as the size of environments that are strongly linked to the information domain is expanding. Today, cyberattacks may have the purpose of stealing data, damaging or altering the normal operation of the IS. These have negative consequences for organizations or individuals who are victims."+
+"In the face of these risks and threats and as in the advanced countries in the field of information systems security, and following the national strategy of cyber security founded by the DGSSI which aims to to provide our information systems with a defense and resilience capability, capable of creating the conditions for an environment of trust and security conducive to the development of the information society, CRSIS has begun a movement that will change the citizens perspective towards the IT field and will emphasize the importance of good personal data protection practices against all forms of attacks as well as train competent people able to meet the demands of the current market ")
     b = Button(canvas1, text="Info", image=r'.\Img\fb.png', compound=CENTER)
 
 def Options():
@@ -178,7 +161,67 @@ def Share():
     MsgBox = messagebox.showinfo('Notification', 'SOON...',icon='info')
 
 
+CODE= { 'A':'.-', 'B':'-...',
+   'C':'-.-.', 'D':'-..', 'E':'.',
+   'F':'..-.', 'G':'--.', 'H':'....',
+   'I':'..', 'J':'.---', 'K':'-.-',
+   'L':'.-..', 'M':'--', 'N':'-.',
+   'O':'---', 'P':'.--.', 'Q':'--.-',
+   'R':'.-.', 'S':'...', 'T':'-',
+   'U':'..-', 'V':'...-', 'W':'.--',
+   'X':'-..-', 'Y':'-.--', 'Z':'--..',
+   '1':'.----', '2':'..---', '3':'...--',
+   '4':'....-', '5':'.....', '6':'-....',
+   '7':'--...', '8':'---..', '9':'----.',
+   '0':'-----', ', ':'--..--', '.':'.-.-.-',
+   '?':'..--..', '/':'-..-.', '-':'-....-',
+   '(':'-.--.', ')':'-.--.-'
+}
 
+def encryption_morse(message,output_morse):
+    outp = ""
+    for char in message :
+        output_morse+=CODE[char.upper()]
+        print(output_morse)
+        return output_morse
+
+
+
+
+def decrypt_morsecode(message) :
+
+    message += ' '
+
+    decipher = ''
+    citext = ''
+    for letter in message :
+
+        # checks for space
+        if (letter != ' ') :
+
+            # counter to keep track of space
+            i = 0
+
+            citext += letter
+
+            # in case of space
+        else :
+            # if i = 1 that indicates a new character
+            i += 1
+
+            # if i = 2 that indicates a new word
+            if i == 2 :
+
+                # adding space to separate words
+                decipher += ' '
+            else :
+
+                # accessing the keys using their values (reverse of encryption)
+                decipher += list(MORSE_CODE_DICT.keys())[list(MORSE_CODE_DICT
+                                                              .values()).index(citext)]
+                citext = ''
+
+    return decipher
 def Crypt():
 
     #ASCII-----------------------------------------------------------------------------------------
@@ -208,30 +251,16 @@ def Crypt():
     numbers="1234567890/~!#$%^&*(()_+}{?><|\-.,][="
 
     #key = int(input("Enter your key : "))
-    MsgBox = messagebox.askquestion('Notification', 'Do you have the key for CESAR encryption?',
+    """MsgBox = messagebox.askquestion('Notification', 'Do you have the key for CESAR encryption?',
                                        icon='info')
-    if MsgBox == 'yes':
-        key = Tk()
-        key.title("The key")
-        cesar_key = "Your Key"
-        height_root = canvas1.winfo_screenheight()
-        width_root = canvas1.winfo_screenwidth()
-        key_canvas = Canvas(key, width=320, height=80)
-        key_text = Text(key, height=1, width=30)
-        key_text.insert(INSERT, cesar_key)
-        key_canvas.create_window(150, 20, window=key_text)
-        button_key = Button(key, text='   Enter  ', command=key_text.get("1.0", END))
-        key_canvas.create_window(200, 60, window=button_key)
-        button_key1 = Button(key, text='   Annuler  ', command=key_canvas.destroy)
-        key_canvas.create_window(100, 60, window=button_key1)
-        cesar_key=key_text.get("1.0", END)
-        print(cesar_key)
-        key_canvas.pack()
+     IMPORTANT if MsgBox == 'yes':
+        return call(["python", "Thekey.py"])
+
 
 
     else:
-        messagebox.showinfo('Return', 'The program will continue without teh key')
-
+        messagebox.showinfo('Return', 'The program will continue without teh key')"""
+    key=3
     n=len(input1)
     m=len(Alphabet1)
     l=len(numbers)
@@ -257,7 +286,9 @@ def Crypt():
 
 
             if input1[i]==Alphabet2[j]:
+
                 if j + key <= 25 :
+
                     output_cesar += Alphabet1[j + key]
                 else :
                     X = 25 - j
@@ -268,10 +299,17 @@ def Crypt():
                 output_cesar+=numbers[j]
 
 
-    output += "CESAR = " + output_cesar
+    output += "CESAR = " + output_cesar + "\n"
 
-    #-------------------------------------------------------------------------------------------------
-    #Enregistred file and output
+    #Morse_code-------------------------------------------------------------------------------------------------
+
+    output_morse = ''
+    input1 = text.get("1.0", END)
+    encryption_morse(input1,output_morse)
+    print(output_morse+"ppp")
+
+    output += "MORSE CODE = " + output_morse
+
     with open("output.txt", "w") as f1:
         for line in output:
             f1.write(line)
@@ -280,6 +318,10 @@ def Crypt():
     text1.insert(INSERT,output)
     print("File registered")
     #messagebox.showinfo("Info", "Your outputs is saved in output.txt , you'll find it in your Cryptosis file.")
+
+
+
+
 def Decrypt() :
     try :
 
@@ -327,6 +369,7 @@ def Cesar():
         m = len(Alphabet1)
         l = len(numbers)
         output_cesar = ""
+
         for i in range(n) :
 
             if input1[i] == " " :
@@ -393,29 +436,29 @@ canvas1.create_window(63, 600, window=text1)
 
 text1 = Text(root, height=10, width=60)
 text1.insert(INSERT, output)
-canvas1.create_window(400, 700, window=text1)
+canvas1.create_window(width/2.6, 700, window=text1)
 
 
 #Buttons-------------------------------------------------------------------------------------------
 
 button2 = Button(root, text='   Browse  ', command=set_filename )
-canvas1.create_window(700, 428, window=button2)
+canvas1.create_window(width/1.6, 428, window=button2)
 
 
 button3 = Button(root, text='  Crypt  ', command=Crypt)
-canvas1.create_window(700, 468, window=button3)
+canvas1.create_window(width/1.6, 468, window=button3)
 
 button4 = Button(root, text='  Decrypt  ', command=Decrypt )
-canvas1.create_window(700, 508, window=button4)
+canvas1.create_window(width/1.6, 508, window=button4)
 
 button1 = Button(root, text='  EXIT  ', command=ExitApplication )
-canvas1.create_window(700, 548, window=button1)
+canvas1.create_window(width/1.6, 548, window=button1)
 
 button1 = Button(root, text='  Copy  ', command=Copy)
-canvas1.create_window(700, 648, window=button1)
+canvas1.create_window(width/1.6, 648, window=button1)
 
 button1 = Button(root, text='  Share  ', command=Share )
-canvas1.create_window(700, 708, window=button1)
+canvas1.create_window(width/1.6, 708, window=button1)
 
 #button3 = Button(root, text='  Modify IDs  ', command=openexcel )
 #canvas1.create_window(500, 900, window=button3)
@@ -428,7 +471,7 @@ canvas1.pack()
 saveinfo = Label(root,
                  text=" Your Outputs and Inputs will be saved in text files , you'll find it in your Cryptosis file.")
 
-saveinfo.pack()
+
 #text2 = Text(root,height=10, width=90)
 #s = Scrollbar(root)
 #ext2.focus_set()
@@ -441,7 +484,7 @@ saveinfo.pack()
 
 #canvas1.create_window(400, 700, window=text2)
 #canvas1.create_window(750, 700, window=s)
-w.pack()
+
 
 #s = Scrollbar(root)
 #T = Text(root)
@@ -455,5 +498,7 @@ w.pack()
 #for i in range(40):
  #  T.insert(END, "This is line %d\n" % i)
 #scrollbar.config( command = mylist.yview )
+saveinfo.pack()
+w.pack()
 root.mainloop()
 
